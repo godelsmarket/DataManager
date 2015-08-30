@@ -16,7 +16,7 @@ class DataManager:
 	def __init__(self):
 		pass
 
-	def downloadData(self, symbol):
+	def downloadData(self, symbol, range=None):
 		""" 
 		Return a csv object with symbol data.
 		csv object is iterable by csv.reader
@@ -26,6 +26,9 @@ class DataManager:
 		base_data_url = "http://www.google.com/finance/historical?output=csv&q="
 		#Create full URL for downloading desired data
 		download_url = base_data_url + symbol
+
+		if (range != None):
+			download_url = download_url + "&startdate=" + range[0] + "&enddate=" + range[1]
 
 		#Download
 		csv = (requests.get(download_url)).content
