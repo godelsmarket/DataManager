@@ -36,18 +36,30 @@ class DataManager:
 
 		return csv
 
-	def getData(self, symbol):
+	def getData(self, symbol, range=None):
 		"""
 		Basic get function. Returns data.
+		Data returned in list of lists.
+		Inner list is a single row (date) from CSV.
 		"""
-		pass
+		symbolcsv = self.downloadData(symbol, range)
+		csvreader = csv.reader(symbolcsv)
+		datarows = []
+		for row in csvreader:
+			datarows.append([row[0], row[1], row[2], row[3], row[4], row[5]])
+		return datarows
 
 if __name__ == "__main__":
 
 	datamanager = DataManager()
-	spycsv = datamanager.downloadData("AAPL")
+	#return csv (use getData for list)
+	spycsv = datamanager.downloadData("SPY")
 
 	csvreader = csv.reader(spycsv)
 	for row in csvreader:
 		print row
 
+	#return a list of "date" lists. (use downloadData for csv)
+	spylist = datamanager.getData("SPY")
+	print spylist
+	print spylist[1]
